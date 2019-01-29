@@ -15,7 +15,10 @@ loop do
     character = get_character_from_user
     show_character_movies(character)
   when 'movie'
-    get_movie_from_user
+    movie = get_movie_from_user
+    show_movie_details(movie)
+  when 'exit'
+    break
   else
     puts "I don't understand, type 'help' for commands"
   end

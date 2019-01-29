@@ -25,11 +25,17 @@ end
 
 def get_movie_info(movie_title)
   response_hash = swapi_request('http://www.swapi.co/api/films/')
-  dig_movie(response_hash['results'], movie_title)
+  dig_title(response_hash['results'], movie_title)
 end
 
-def print_movie_details(movie_hash)
-  binding.pry
+def print_details(movie_hash)
+  puts """Title: #{movie_hash['title']}
+Directed By: #{movie_hash['director']}
+Produced By: #{movie_hash['producer']}
+Released: #{movie_hash['release_date']}
+Crawl:
+  #{movie_hash['opening_crawl']}
+--<>--<>--<>--<>--<>--<>--<>--<>--"""
 end
 
 def print_movies(films)
@@ -53,7 +59,7 @@ def show_movie_details(movie_title)
   puts "Looking up detaisl for: #{movie_title}"
   puts "<*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*>"
   movie_hash = get_movie_info(movie_title)
-  show_movie_details(movie_hash)
+  print_details(movie_hash)
 end
 
 
