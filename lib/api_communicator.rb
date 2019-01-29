@@ -18,16 +18,23 @@ def get_character_movies_from_api(character_name)
 
   character_hash['films'].map do |film_url|
     result = swapi_request(film_url)
-    binding.pry
   end
 end
 
 def print_movies(films)
+  films.each do |film|
+    #binding.pry
+    puts film['title']
+    puts "Directed by: #{film['director']}, #{film['release_date']}"
+    puts "--<>--<>--<>--<>--<>--<>--<>--<>--"
+  end
   # some iteration magic and puts out the movies in a nice list
 end
 
 def show_character_movies(character)
   films = get_character_movies_from_api(character)
+  puts "#{character} appears in the following movies:"
+  puts "<*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*>"
   print_movies(films)
 end
 
