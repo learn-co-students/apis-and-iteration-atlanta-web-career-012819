@@ -1,10 +1,12 @@
 require 'rest-client'
 require 'json'
 require 'pry'
-def dig_character_by_name(big_array, character_name)
+def dig_character(big_array, character_name)
   big_array.find {|hash| hash['name'] == character_name}
 end
-
+def dig_title(big_array, movie_title)
+  big_array.find {|hash| hash['title'] == movie_title}
+end
 def swapi_request(url)
   response_string = RestClient.get(url)
   #FIX ME test for success here
@@ -14,11 +16,20 @@ end
 def get_character_movies_from_api(character_name)
   #make the web request
   response_hash = swapi_request('http://www.swapi.co/api/people/')
-  character_hash = dig_character_by_name(response_hash['results'],character_name)
+  character_hash = dig_character(response_hash['results'],character_name)
 
   character_hash['films'].map do |film_url|
     result = swapi_request(film_url)
   end
+end
+
+def get_movie_info(movie_title)
+  response_hash = swapi_request('http://www.swapi.co/api/films/')
+  dig_movie(response_hash['results'], movie_title)
+end
+
+def print_movie_details(movie_hash)
+  binding.pry
 end
 
 def print_movies(films)
@@ -37,6 +48,14 @@ def show_character_movies(character)
   puts "<*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*>"
   print_movies(films)
 end
+
+def show_movie_details(movie_title)
+  puts "Looking up detaisl for: #{movie_title}"
+  puts "<*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*>"
+  movie_hash = get_movie_info(movie_title)
+  show_movie_details(movie_hash)
+end
+
 
 ## BONUS
 
